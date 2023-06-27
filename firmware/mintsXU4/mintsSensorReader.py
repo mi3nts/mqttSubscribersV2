@@ -28,15 +28,12 @@ from collections import OrderedDict
 import netifaces as ni
 import math
 
-macAddress     = mD.macAddress
-dataFolder     = mD.dataFolder
-dataFolderMQTT = mD.dataFolderMQTT
+macAddress              = mD.macAddress
+dataFolder              = mD.dataFolder
+dataFolderMQTT          = mD.dataFolderMQTT
 dataFolderMQTTReference = mD.dataFolderMQTTReference
-latestOn       = mD.latestOn
-mqttOn         = mD.mqttOn
-
-
-
+latestOn                = mD.latestOn
+mqttOn                  = mD.mqttOn
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
@@ -52,9 +49,6 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print("-----------------------------------")
     print(sensorName)
     print(sensorDictionary)
-
-
-
 
 def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     #Getting Write Path

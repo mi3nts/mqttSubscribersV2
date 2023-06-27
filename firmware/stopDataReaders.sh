@@ -1,16 +1,11 @@
-# LoRa Nodes
-kill $(pgrep -f 'python3 loraNodesDataRead.py')
-sleep 1
-#python3 loraNodesDataRead.py &
+#!/bin/sh
 
-# Central Nodes
-kill $(pgrep -f 'python3 centralNodesDataRead.py')
-sleep 1
-#python3 centralNodesDataRead.py &
 
-# UTD Nodes 
-kill $(pgrep -f 'python3 utdNodesDataRead.py')
+kill $(pgrep -f 'DCDataReader.py')
 sleep 1
-#python3 utdNodesDataRead.py &
+
+
+kill $(pgrep -f 'LNDataReader.py')
+sleep 1
 
 

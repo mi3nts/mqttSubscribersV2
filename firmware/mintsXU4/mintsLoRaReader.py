@@ -12,6 +12,10 @@
 #   https://github.com/mi3nts
 #   http://utdmints.info/
 #  ***************************************************************************
+
+
+
+
 import serial
 import datetime
 from datetime import timedelta
@@ -32,13 +36,13 @@ import base64
 import json
 import struct
 
-macAddress     = mD.macAddress
-dataFolder     = mD.dataFolder
-dataFolderMQTT = mD.dataFolderMQTT
+macAddress              = mD.macAddress
+dataFolder              = mD.dataFolder
+dataFolderMQTT          = mD.dataFolderMQTT
 dataFolderMQTTReference = mD.dataFolderMQTTReference
-latestOn       = mD.latestOn
-mqttOn         = mD.mqttOn
-decoder        = json.JSONDecoder(object_pairs_hook=OrderedDict)
+latestOn                = mD.latestOn
+mqttOn                  = mD.mqttOn
+decoder                 = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
 def sensorSendLoRa(dateTime,nodeID,sensorID,framePort,base16Data):
     if(sensorID=="IPS7100"):
@@ -75,8 +79,65 @@ def sensorSendLoRa(dateTime,nodeID,sensorID,framePort,base16Data):
         MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
     if(sensorID=="PMPoLo"):
         PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="BME280V2"):
+        BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="RG15"):
+        RG15LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="MBLS001"):
+        MBLS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)                        
 
 # ADD THE REST OF THE SENSORS HERE 
+
+# Code for the rain  module
+def BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 22 and len(base16Data) ==40):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"     ,str(dateTime)),
+                    ("temperature"  ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
+                    ("pressure"     ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
+                    ("humidity"     ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
+                    ("dewPoint"     ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
+                    ("altitude"     ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),        
+            ])
+    print(sensorDictionary)        
+    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+def RG15LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 61 and len(base16Data) ==32):
+            sensorDictionary =  OrderedDict([
+                    ("dateTime"           ,str(dateTime)),
+                    ("accumulation"       ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
+                    ("eventAccumulation"  ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
+                    ("totalAccumulation"  ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
+                    ("rainPerInterval"    ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
+            ])
+    print(sensorDictionary)        
+    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+def MBLS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 71 and len(base16Data) ==76):
+            sensorDictionary =  OrderedDict([
+                    ("dateTime"            ,str(dateTime)),
+                    ("batteryLevelRaw"     ,struct.unpack('<H',bytes.fromhex(base16Data[0:4]))[0]),
+                    ("cellVoltage"         ,struct.unpack('<f',bytes.fromhex(base16Data[4:12]))[0]),
+                    ("solarVoltage"        ,struct.unpack('<f',bytes.fromhex(base16Data[12:20]))[0]),
+                    ("solarCurrent"        ,struct.unpack('<f',bytes.fromhex(base16Data[20:28]))[0]),
+                    ("solarPower"          ,struct.unpack('<f',bytes.fromhex(base16Data[28:36]))[0]),
+                    ("solarShuntVoltage"   ,struct.unpack('<f',bytes.fromhex(base16Data[36:44]))[0]), 
+                    ("batteryVoltage"      ,struct.unpack('<f',bytes.fromhex(base16Data[44:52]))[0]),
+                    ("batteryCurrent"      ,struct.unpack('<f',bytes.fromhex(base16Data[52:60]))[0]),
+                    ("batteryPower"        ,struct.unpack('<f',bytes.fromhex(base16Data[60:68]))[0]),
+                    ("batteryShuntVoltage" ,struct.unpack('<f',bytes.fromhex(base16Data[68:76]))[0])
+            ])
+    print(sensorDictionary)        
+    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
 def MBCLR001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     print(len(base16Data))
     if(framePort == 42 and len(base16Data) ==16):
@@ -503,16 +564,18 @@ def loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary):
     return;
 
 def loRaSummaryWrite(message,portIDs):
+
     nodeID = message.topic.split('/')[5]
     sensorPackage       =  decoder.decode(message.payload.decode("utf-8","ignore"))
     rxInfo              =  sensorPackage['rxInfo'][0]
     txInfo              =  sensorPackage['txInfo']
     loRaModulationInfo  =  txInfo['loRaModulationInfo']
-    sensorID            = portIDs[getPortIndex(sensorPackage['fPort'],portIDs)]['sensor']
-    dateTime            = datetime.datetime.fromisoformat(sensorPackage['publishedAt'][0:26])
-    base16Data          = base64.b64decode(sensorPackage['data'].encode()).hex()
-    gatewayID           = base64.b64decode(rxInfo['gatewayID']).hex()
-    framePort           = sensorPackage['fPort']
+    framePort           =  sensorPackage['fPort']
+    sensorID            =  getSensorFromPort(framePort,portIDs)
+    dateTime            =  datetime.datetime.fromisoformat(sensorPackage['publishedAt'][0:26])
+    base16Data          =  base64.b64decode(sensorPackage['data'].encode()).hex()
+    gatewayID           =  base64.b64decode(rxInfo['gatewayID']).hex()
+
     sensorDictionary =  OrderedDict([
             ("dateTime"        , str(dateTime)),
             ("nodeID"          , nodeID),
@@ -534,6 +597,9 @@ def loRaSummaryWrite(message,portIDs):
             ("devAddr"         , sensorPackage['devAddr']),
             ("deviceAddDecoded", base64.b64decode(sensorPackage['devAddr'].encode()).hex())
         ])
+    print(sensorDictionary)
+
+ 
     loRaWriteFinisher("LoRaNodes","Summary",dateTime,sensorDictionary)
     loRaWriteFinisher(gatewayID,"Summary",dateTime,sensorDictionary)
     return dateTime,gatewayID,nodeID,sensorID,framePort,base16Data;
@@ -545,3 +611,9 @@ def getPortIndex(portIDIn,portIDs):
             return indexOut; 
         indexOut = indexOut +1
     return -1;
+
+def getSensorFromPort(framePort,portIDs):
+    for portID in portIDs:
+        if (framePort == portID['portID']):
+            return portID['sensor']; 
+    return "UnknownSensor";

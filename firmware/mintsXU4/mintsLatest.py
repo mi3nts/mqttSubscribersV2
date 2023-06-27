@@ -13,14 +13,15 @@ import ssl
 
 macAddress              = mD.macAddress
 mqttPort                = mD.mqttPort
-mqttBroker              = mD.mqttBroker
+mqttBroker              = mD.mqttBrokerDC
 dataFolderMQTT          = mD.dataFolderMQTT
-mqttCredentialsFile     = mD.mqttCredentialsFile
+
 dataFolderMQTTReference = mD.dataFolderMQTTReference
 tlsCert                 = mD.tlsCert
 
+credentials             = mD.credentials
 # FOR MQTT 
-credentials = yaml.load(open(mqttCredentialsFile),Loader=yaml.FullLoader)
+
 connected   = False  # Stores the connection status
 broker      = mqttBroker
 port        = mqttPort # Secure port
