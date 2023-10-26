@@ -17,11 +17,12 @@ mqttOn                    = True
 credentialsFile           = 'mintsXU4/credentials/credentials.yaml'
 credentials               = yaml.load(open(credentialsFile))
 
-sensorInfoFile            = 'mintsXU4/credentials/sensorIDs.yml'
-sensorInfo                = yaml.load(open(sensorInfoFile),Loader=yaml.FullLoader)
-
-portInfoFile              = 'mintsXU4/credentials/portIDs.yml'
-portInfo                  = yaml.load(open(portInfoFile),Loader=yaml.FullLoader)
+# sensorInfoFile            = 'mintsXU4/credentials/sensorIDs.yml'
+# sensorInfo                = yaml.load(open(sensorInfoFile),Loader=yaml.FullLoader)
+sensorInfo                = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/sensorIDs.csv')
+# portInfoFile              = 'mintsXU4/credentials/portIDs.yml'
+# portInfo                  = yaml.load(open(portInfoFile),Loader=yaml.FullLoader)
+portInfo                  = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/portIDs.csv')
 
 nodeInfo                  = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/id_lookup.csv')
 
@@ -50,3 +51,12 @@ macAddress                = findMacAddress()
 
 print()
 print("----- MQTT Subscriber V2 -----")
+print(" ")
+print("Node Info:")
+print(nodeInfo)
+print(" ")
+print("Sensor Info:")
+print(sensorInfo)
+print(" ")
+print("Port Info:")
+print(portInfo)
