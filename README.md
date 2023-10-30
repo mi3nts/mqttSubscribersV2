@@ -7,4 +7,5 @@ Contains firmware on obtaining live data from mints MQTT data pipelines
 - Raw LoRaWAN data must be saved just as we did before
 - Should Contain two seperate codes for data saving
 
- 
+ ## TO DO 
+ - Custom Sensor ID and Node ID reads
