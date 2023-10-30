@@ -17,13 +17,8 @@ mqttOn                    = True
 credentialsFile           = 'mintsXU4/credentials/credentials.yaml'
 credentials               = yaml.load(open(credentialsFile))
 
-# sensorInfoFile            = 'mintsXU4/credentials/sensorIDs.yml'
-# sensorInfo                = yaml.load(open(sensorInfoFile),Loader=yaml.FullLoader)
 sensorInfo                = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/sensorIDs.csv')
-# portInfoFile              = 'mintsXU4/credentials/portIDs.yml'
-# portInfo                  = yaml.load(open(portInfoFile),Loader=yaml.FullLoader)
 portInfo                  = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/portIDs.csv')
-
 nodeInfo                  = pd.read_csv('https://raw.githubusercontent.com/mi3nts/AirQualityAnalysisWorkflows/main/influxdb/nodered-docker/id_lookup.csv')
 
 mqttBrokerDC              = "mqtt.circ.utdallas.edu"

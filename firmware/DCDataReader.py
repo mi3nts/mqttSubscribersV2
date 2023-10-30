@@ -32,9 +32,10 @@ mqttUN                = credentials['mqtt']['username']
 mqttPW                = credentials['mqtt']['password'] 
 
 nodeIDs               = nodeInfo['mac_address']
-sensorIDs             = sensorInfo['SensorID']
+sensorIDs             = sensorInfo['sensorID']
 
 decoder = json.JSONDecoder(object_pairs_hook=collections.OrderedDict)
+
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -55,7 +56,7 @@ def on_message(client, userdata, msg):
     print()
     # print(msg.topic+":"+str(msg.payload))
     try:
-        [nodeID,sensorID ] = msg.topic.split('/')
+        [nodeID,sensorID] = msg.topic.split('/')
         sensorDictionary = decoder.decode(msg.payload.decode("utf-8","ignore"))
         print("Node ID   :" + nodeID)
         print("Sensor ID :" + sensorID)
