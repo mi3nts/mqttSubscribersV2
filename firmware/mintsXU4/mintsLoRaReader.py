@@ -1,19 +1,20 @@
-# ***************************************************************************
-#  mintsXU4
-#   ---------------------------------
-#   Written by: Lakitha Omal Harindha Wijeratne
-#   - for -
-#   Mints: Multi-scale Integrated Sensing and Simulation
-#   ---------------------------------
-#   Date: February 4th, 2019
-#   ---------------------------------
-#   This module is written for generic implimentation of MINTS projects
-#   --------------------------------------------------------------------------
-#   https://github.com/mi3nts
-#   http://utdmints.info/
-#  ***************************************************************************
-
-
+# // # ***************************************************************************
+# // #   MQTT Subscribers V2
+# // #   ---------------------------------
+# // #   Written by: Lakitha Omal Harindha Wijeratne
+# // #   - for -
+# // #   MINTS:  Multi-scale Integrated Sensing and Simulation
+# // #   &  
+# // #   TRECIS: Texas Research and Education Cyberinfrastructure Services
+# // #   ---------------------------------
+# // #   Date: October 30th, 2023
+# // #   ---------------------------------
+# // #   This module is written for generic implimentation of LoRaWAN MINTS projects
+# // #   --------------------------------------------------------------------------
+# // #   https://github.com/mi3nts
+# // #   https://mints.utdallas.edu/
+# // #   https://trecis.cyberinfrastructure.org/
+# // #  ***************************************************************************
 
 
 import serial
@@ -45,50 +46,147 @@ mqttOn                  = mD.mqttOn
 decoder                 = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
 def sensorSendLoRa(dateTime,nodeID,sensorID,framePort,base16Data):
-    if(sensorID=="IPS7100"):
-        IPS7100LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="BME280"):
-        BME280LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)        
-    if(sensorID=="SCD30"):
-        SCD30LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
-    if(sensorID=="INA219Mono"):
-        INA219MonoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
-    if(sensorID=="INA219Duo"):
-        INA219DuoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
-    if(sensorID=="MGS001"):
-        MGS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
     if(sensorID=="PM"):
         PMLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="PMSalor"):
+        PMSalorLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="INA219Duo"):
+        INA219DuoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)  
+    if(sensorID=="MLRPS001"):
+        MLRPS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="PMPoLo"):
+        PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)        
     if(sensorID=="GPGGALR"):
         GPGGALRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="PA1010D"):
+        PA1010DLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    # if(sensorID=="GPGGA"):
+    #     GPGGALoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    # if(sensorID=="GPRMC"):
+    #     GPRMCLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="GPGGAPL"):
+        GPGGAPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="GPRMCPL"):
+        GPRMCPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="MacAD"):
+        MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    # if(sensorID=="OPCN2"):
+    #     OPCN2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    # if(sensorID=="OPCN3"):
+    #     OPCN3LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)    
+    if(sensorID=="IPS7100"):
+        IPS7100LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
     if(sensorID=="IPS7100CNR"):
         IPS7100CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="BME280"):
+        BME280LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)        
+    if(sensorID=="BME280V2"):
+        BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)    
     if(sensorID=="BME688CNR"):
-        BME688CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="AS7265X"):
-        AS7265XLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="GPRMCPL"):
-        GPRMCPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="GPGGAPL"):
-        GPGGAPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+        BME688CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)            
+    if(sensorID=="SCD30"):
+        SCD30LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
+    if(sensorID=="MGS001"):
+        MGS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
     if(sensorID=="MBCLR001"):
         MBCLR001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
     if(sensorID=="MBCLR002"):
         MBCLR002LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="MacAD"):
-        MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="PMPoLo"):
-        PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="BME280V2"):
-        BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="AS7265X"):
+        AS7265XLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="AS7265X1"):
+        AS7265X1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
+    if(sensorID=="AS7265X2"):
+        AS7265X2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
     if(sensorID=="RG15"):
         RG15LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)
-    if(sensorID=="MBLS001"):
-        MBLS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data)                        
+              
 
 # ADD THE REST OF THE SENSORS HERE 
 
-# Code for the rain  module
+def PMSalorLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 102 and len(base16Data) ==2):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"      ,str(dateTime)),
+                    ("powerMode",struct.unpack('<B',bytes.fromhex(base16Data[0:2]))[0])
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+def PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 4 and len(base16Data) ==2):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"      ,str(dateTime)),
+                    ("powerMode",struct.unpack('<B',bytes.fromhex(base16Data[0:2]))[0])
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+
+def PA1010DLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 105 and len(base16Data) ==76):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"               ,str(dateTime)),
+                    ("latitudeCoordinate"     ,struct.unpack('<d',bytes.fromhex(base16Data[0:16]))[0]),
+                    ("longitudeCoordinate"    ,struct.unpack('<d',bytes.fromhex(base16Data[16:32]))[0]),
+                    ("altitude"               ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),
+                    ("speed"                  ,struct.unpack('<f',bytes.fromhex(base16Data[40:48]))[0]),
+                    ("magVariation"           ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),        
+                    ("year"                   ,struct.unpack('<H',bytes.fromhex(base16Data[56:60]))[0]),
+                    ("month"                  ,struct.unpack('<B',bytes.fromhex(base16Data[60:62]))[0]),
+                    ("day"                    ,struct.unpack('<B',bytes.fromhex(base16Data[62:64]))[0]),
+                    ("hour"                   ,struct.unpack('<B',bytes.fromhex(base16Data[64:66]))[0]),
+                    ("minute"                 ,struct.unpack('<B',bytes.fromhex(base16Data[66:68]))[0]),
+                    ("second"                 ,struct.unpack('<B',bytes.fromhex(base16Data[68:70]))[0]),
+                    ("satellites"             ,struct.unpack('<B',bytes.fromhex(base16Data[70:72]))[0]),
+                    ("fixQuality"              ,struct.unpack('<B',bytes.fromhex(base16Data[72:74]))[0]),
+                    ("fixQuality3D"            ,struct.unpack('<B',bytes.fromhex(base16Data[74:76]))[0]),
+
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+
+def MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 8 ):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"      ,str(dateTime)),
+                    ("macAddress"    ,base16Data),
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+
+def MLRPS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 103 and len(base16Data) ==72):
+        sensorDictionary =  OrderedDict([
+                    ("dateTime"               ,str(dateTime)),
+                    ("batteryShuntVoltage"    ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
+                    ("batteryBusVoltage"      ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
+                    ("batteryCurrent"         ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
+                    ("batteryPower"           ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
+                    ("solarShuntVoltage"      ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),        
+                    ("solarBusVoltage"        ,struct.unpack('<f',bytes.fromhex(base16Data[40:48]))[0]),
+                    ("solarCurrent"           ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
+                    ("solarPower"             ,struct.unpack('<f',bytes.fromhex(base16Data[56:64]))[0]),
+                    ("internalBatteryVoltage" ,struct.unpack('<f',bytes.fromhex(base16Data[64:72]))[0]),    
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+            
+
+
+
 def BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     print(len(base16Data))
     if(framePort == 22 and len(base16Data) ==40):
@@ -100,28 +198,28 @@ def BME280V2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                     ("dewPoint"     ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
                     ("altitude"     ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),        
             ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;  
 
 def RG15LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     print(len(base16Data))
     if(framePort == 61 and len(base16Data) ==32):
-            sensorDictionary =  OrderedDict([
+        sensorDictionary =  OrderedDict([
                     ("dateTime"           ,str(dateTime)),
                     ("accumulation"       ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
                     ("eventAccumulation"  ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
                     ("totalAccumulation"  ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
                     ("rainPerInterval"    ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
             ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;  
 
 def MBLS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     print(len(base16Data))
     if(framePort == 71 and len(base16Data) ==76):
-            sensorDictionary =  OrderedDict([
+        sensorDictionary =  OrderedDict([
                     ("dateTime"            ,str(dateTime)),
                     ("batteryLevelRaw"     ,struct.unpack('<H',bytes.fromhex(base16Data[0:4]))[0]),
                     ("cellVoltage"         ,struct.unpack('<f',bytes.fromhex(base16Data[4:12]))[0]),
@@ -134,8 +232,8 @@ def MBLS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                     ("batteryPower"        ,struct.unpack('<f',bytes.fromhex(base16Data[60:68]))[0]),
                     ("batteryShuntVoltage" ,struct.unpack('<f',bytes.fromhex(base16Data[68:76]))[0])
             ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;  
 
 def MBCLR001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -150,8 +248,8 @@ def MBCLR001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
             	("label"        ,struct.unpack('<H',bytes.fromhex(base16Data[4:8]))[0]),
                 ("confidence"   ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
         ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;  
 
 def MBCLR002LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -233,94 +331,94 @@ def MBCLR002LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                         ("confidence7"   ,struct.unpack('<f',bytes.fromhex(base16Data[122:130]))[0]),
                     ])
 
-    print(sensorDictionary)
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
 
-    sensorID = "MBCLR001"
-    if numOfCalls >0 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime0)),
-                        ("label"        ,label0),
-                        ("confidence"   ,confidence0),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime0,sensorDictionary)
-    
-    if numOfCalls >1 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime1)),
-                        ("label"        ,label1),
-                        ("confidence"   ,confidence1),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime1,sensorDictionary)
+        sensorID = "MBCLR001"
+        if numOfCalls >0 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime0)),
+                            ("label"        ,label0),
+                            ("confidence"   ,confidence0),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime0,sensorDictionary)
+        
+        if numOfCalls >1 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime1)),
+                            ("label"        ,label1),
+                            ("confidence"   ,confidence1),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime1,sensorDictionary)
 
-    if numOfCalls >2 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime2)),
-                        ("label"        ,label2),
-                        ("confidence"   ,confidence2),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime2,sensorDictionary)
-    
-    if numOfCalls >3 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime3)),
-                        ("label"        ,label3),
-                        ("confidence"   ,confidence3),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime3,sensorDictionary)
+        if numOfCalls >2 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime2)),
+                            ("label"        ,label2),
+                            ("confidence"   ,confidence2),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime2,sensorDictionary)
+        
+        if numOfCalls >3 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime3)),
+                            ("label"        ,label3),
+                            ("confidence"   ,confidence3),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime3,sensorDictionary)
 
-    if numOfCalls >4 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime4)),
-                        ("label"        ,label4),
-                        ("confidence"   ,confidence4),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime4,sensorDictionary)
+        if numOfCalls >4 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime4)),
+                            ("label"        ,label4),
+                            ("confidence"   ,confidence4),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime4,sensorDictionary)
 
-    if numOfCalls >5 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime5)),
-                        ("label"        ,label5),
-                        ("confidence"   ,confidence5),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime5,sensorDictionary)
+        if numOfCalls >5 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime5)),
+                            ("label"        ,label5),
+                            ("confidence"   ,confidence5),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime5,sensorDictionary)
 
-    if numOfCalls >6 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime6)),
-                        ("label"        ,label6),
-                        ("confidence"   ,confidence6),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime6,sensorDictionary)
+        if numOfCalls >6 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime6)),
+                            ("label"        ,label6),
+                            ("confidence"   ,confidence6),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime6,sensorDictionary)
 
-    if numOfCalls > 7 :
-        sensorDictionary =  OrderedDict([
-                        ("dateTime"     ,str(dateTime7)),
-                        ("label"        ,label7),
-                        ("confidence"   ,confidence7),
-                    ])
-        loRaWriteFinisher(nodeID,sensorID,dateTime7,sensorDictionary)
-    return ;  
+        if numOfCalls > 7 :
+            sensorDictionary =  OrderedDict([
+                            ("dateTime"     ,str(dateTime7)),
+                            ("label"        ,label7),
+                            ("confidence"   ,confidence7),
+                        ])
+            loRaWriteFinisher(nodeID,sensorID,dateTime7,sensorDictionary)
+        return ;  
 
-def PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
-    if(framePort == 4 and len(base16Data) ==2):
-        sensorDictionary =  OrderedDict([
-                ("dateTime"      ,str(dateTime)),
-                ("powerMode",struct.unpack('<B',bytes.fromhex(base16Data[0:2]))[0])
-        ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
-    return ;   
+    def PMPoLoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+        if(framePort == 4 and len(base16Data) ==2):
+            sensorDictionary =  OrderedDict([
+                    ("dateTime"      ,str(dateTime)),
+                    ("powerMode",struct.unpack('<B',bytes.fromhex(base16Data[0:2]))[0])
+            ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        return ;   
 
-def MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
-    print(len(base16Data))
-    if(framePort == 8 and len(base16Data) ==12):
-        sensorDictionary =  OrderedDict([
-                ("dateTime"      ,str(dateTime)),
-                ("macAddress" ,base16Data),
-        ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    def MacADLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+        print(len(base16Data))
+        if(framePort == 8 and len(base16Data) ==12):
+            sensorDictionary =  OrderedDict([
+                    ("dateTime"      ,str(dateTime)),
+                    ("macAddress" ,base16Data),
+            ])
+            print(sensorDictionary)        
+            loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;    
 
 def GPGGAPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -338,8 +436,8 @@ def GPGGAPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
             	("altitude"            ,struct.unpack('<f',bytes.fromhex(base16Data[50:58]))[0]),
         		("undulation"          ,struct.unpack('<f',bytes.fromhex(base16Data[58:66]))[0]),
         ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def GPRMCPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -357,9 +455,51 @@ def GPRMCPLLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
         		("speedOverGround"     ,struct.unpack('<f',bytes.fromhex(base16Data[46:54]))[0]),
         ])
 
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
+
+def AS7265X1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 52 and len(base16Data) ==72) :
+        sensorDictionary =  OrderedDict([
+                ("dateTime"      ,str(dateTime)),
+        		("channelA410nm" ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
+            	("channelB435nm" ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
+        		("channelC460nm" ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
+            	("channelD485nm" ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),                
+        		("channelE510nm" ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),
+            	("channelF535nm" ,struct.unpack('<f',bytes.fromhex(base16Data[40:48]))[0]),
+        		("channelG560nm" ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
+            	("channelH585nm" ,struct.unpack('<f',bytes.fromhex(base16Data[56:64]))[0]),                
+        		("channelR610nm" ,struct.unpack('<f',bytes.fromhex(base16Data[64:72]))[0]),
+        ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;
+
+
+def AS7265X2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
+    print(len(base16Data))
+    if(framePort == 53 and len(base16Data) ==72) :
+        sensorDictionary =  OrderedDict([
+                ("dateTime"      ,str(dateTime)),
+        		("channelI645nm" ,struct.unpack('<f',bytes.fromhex(base16Data[0:8]))[0]),
+            	("channelS680nm" ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
+        		("channelJ705nm" ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
+            	("channelT730nm" ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),                
+        		("channelU760nm" ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),
+            	("channelV810nm" ,struct.unpack('<f',bytes.fromhex(base16Data[40:48]))[0]),
+        		("channelW860nm" ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
+            	("channelK900nm" ,struct.unpack('<f',bytes.fromhex(base16Data[56:64]))[0]),                
+        		("channelL940nm" ,struct.unpack('<f',bytes.fromhex(base16Data[64:72]))[0]),
+        ])
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;
+
+
+
 
 def AS7265XLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     print(len(base16Data))
@@ -385,8 +525,8 @@ def AS7265XLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
         		("channelK900nm" ,struct.unpack('<f',bytes.fromhex(base16Data[128:136]))[0]),
             	("channelL940nm" ,struct.unpack('<f',bytes.fromhex(base16Data[136:144]))[0]),
         ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def BME688CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -403,8 +543,8 @@ def BME688CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
             	("co2Eq"       ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
         ])
 
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def IPS7100CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -426,8 +566,8 @@ def IPS7100CNRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
         		("pm5_0"  ,struct.unpack('<f',bytes.fromhex(base16Data[96:104]))[0]), 
             	("pm10_0" ,struct.unpack('<f',bytes.fromhex(base16Data[104:112]))[0])
         ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def IPS7100LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -449,8 +589,8 @@ def IPS7100LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
         		("pm5_0"  ,struct.unpack('<f',bytes.fromhex(base16Data[96:104]))[0]), 
             	("pm10_0" ,struct.unpack('<f',bytes.fromhex(base16Data[104:112]))[0])
         ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def BME280LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -461,8 +601,8 @@ def BME280LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
             	("Pressure"    ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
                 ("Humidity"    ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def SCD30LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -473,8 +613,8 @@ def SCD30LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
             	("Temperature" ,struct.unpack('<f',bytes.fromhex(base16Data[8:16]))[0]),
                 ("Humidity"    ,struct.unpack('<f',bytes.fromhex(base16Data[16:24]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def INA219MonoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -487,8 +627,8 @@ def INA219MonoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                 ("currentSolar"        ,struct.unpack('<f',bytes.fromhex(base16Data[24:32]))[0]),
                 ("powerSolar"          ,struct.unpack('<f',bytes.fromhex(base16Data[32:40]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def INA219DuoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -504,8 +644,8 @@ def INA219DuoLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                 ("currentSolar"        ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
                 ("powerSolar"          ,struct.unpack('<f',bytes.fromhex(base16Data[56:64]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 def MGS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
     if(framePort == 31 and len(base16Data) ==64):
@@ -520,8 +660,8 @@ def MGS001LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                 ("NH3"      ,struct.unpack('<f',bytes.fromhex(base16Data[48:56]))[0]),
                 ("NO2"      ,struct.unpack('<f',bytes.fromhex(base16Data[56:64]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def GPGGALRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -541,8 +681,8 @@ def GPGGALRLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                 ("Minute"     ,struct.unpack('<b',bytes.fromhex(base16Data[106:108]))[0]),
                 ("Second"     ,struct.unpack('<b',bytes.fromhex(base16Data[108:110]))[0]), #5 bytes 
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def PMLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
@@ -551,8 +691,8 @@ def PMLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data):
                 ("dateTime" ,str(dateTime)), 
         		("powerMode",struct.unpack('<b',bytes.fromhex(base16Data[0:2]))[0]),
           ])
-    print(sensorDictionary)        
-    loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+        print(sensorDictionary)        
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
     return ;
 
 def loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary):
@@ -563,7 +703,7 @@ def loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary):
     mL.writeJSONLatestMQTT(sensorDictionary,nodeID,sensorID)
     return;
 
-def loRaSummaryWrite(message,portIDs):
+def loRaSummaryWrite(message,portInfo):
 
     nodeID = message.topic.split('/')[5]
     sensorPackage       =  decoder.decode(message.payload.decode("utf-8","ignore"))
@@ -571,7 +711,10 @@ def loRaSummaryWrite(message,portIDs):
     txInfo              =  sensorPackage['txInfo']
     loRaModulationInfo  =  txInfo['loRaModulationInfo']
     framePort           =  sensorPackage['fPort']
-    sensorID            =  getSensorFromPort(framePort,portIDs)
+    # print(framePort)
+    # print(portInfo)
+    
+    sensorID            =  getSensorFromPort(framePort,portInfo)
     dateTime            =  datetime.datetime.fromisoformat(sensorPackage['publishedAt'][0:26])
     base16Data          =  base64.b64decode(sensorPackage['data'].encode()).hex()
     gatewayID           =  base64.b64decode(rxInfo['gatewayID']).hex()
@@ -612,8 +755,14 @@ def getPortIndex(portIDIn,portIDs):
         indexOut = indexOut +1
     return -1;
 
-def getSensorFromPort(framePort,portIDs):
-    for portID in portIDs:
-        if (framePort == portID['portID']):
-            return portID['sensor']; 
+def getSensorFromPort(framePort,portInfo):
+    for currentPortIndex, currentPortID in enumerate(portInfo['portID']):
+        if (framePort == currentPortID):
+            # print("---------------")
+            # print("Port ID:")
+            # print(currentPortID)
+            sensorID = portInfo['sensorID'][currentPortIndex]
+            # print("Sensor ID:")
+            # print(sensorID)
+            return sensorID; 
     return "UnknownSensor";

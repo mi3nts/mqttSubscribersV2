@@ -32,14 +32,10 @@ port                  = mqttPort  # Secure port
 mqttUN                = credentials['LoRaMqtt']['username'] 
 mqttPW                = credentials['LoRaMqtt']['password'] 
 
-nodeIDs               = nodeInfo['mac_address'].values
+nodeIDs               = nodeInfo['mac_address'].tolist()
 print(nodeIDs)
-
-sensorIDs             = sensorInfo['sensorIDs']
-print(sensorIDs)
-
-portIDs               = portInfo['portIDs']
-print(portIDs)
+sensorIDs             = sensorInfo['sensorID']
+portIDs               = portInfo['portID']
 
 decoder = json.JSONDecoder(object_pairs_hook=collections.OrderedDict)
 
@@ -51,17 +47,15 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     try:
-        # print()
-        # print(" - - - MINTS DATA RECEIVED - - - ")
-        # print(msg.payload)
-        dateTime,gatewayID,nodeID,sensorID,framePort,base16Data = \
-            mLR.loRaSummaryWrite(msg,portIDs)
-        
         print("==================================================================")
         print(" - - - MINTS DATA RECEIVED - - - ")
+        print(msg.payload)
+        dateTime,gatewayID,nodeID,sensorID,framePort,base16Data = \
+            mLR.loRaSummaryWrite(msg,portInfo)
+        
+
         print("Node ID         : " + nodeID)
         print("Sensor ID       : " + sensorID)
-
         if nodeID in nodeIDs:
             print("Date Time       : " + str(dateTime))
             print("Port ID         : " + str(framePort))
@@ -73,7 +67,7 @@ def on_message(client, userdata, msg):
         print("[ERROR] Could not publish data, error: {}".format(e))
 
 
-# # Create an MQTT client and attach our routines to it.
+# Create an MQTT client and attach our routines to it.
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message

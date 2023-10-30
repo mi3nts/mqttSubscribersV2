@@ -31,12 +31,8 @@ port                  = mqttPort  # Secure port
 mqttUN                = credentials['mqtt']['username'] 
 mqttPW                = credentials['mqtt']['password'] 
 
-print(nodeInfo)
 nodeIDs               = nodeInfo['mac_address']
-print(nodeIDs)
-
-sensorIDs             = sensorInfo['sensorIDs']
-print(sensorIDs)
+sensorIDs             = sensorInfo['SensorID']
 
 decoder = json.JSONDecoder(object_pairs_hook=collections.OrderedDict)
 
