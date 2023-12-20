@@ -740,7 +740,7 @@ def loRaSummaryWrite(message,portInfo):
             ("devAddr"         , sensorPackage['devAddr']),
             ("deviceAddDecoded", base64.b64decode(sensorPackage['devAddr'].encode()).hex())
         ])
-    print(sensorDictionary)
+    # print(sensorDictionary)
 
  
     loRaWriteFinisher("LoRaNodes","Summary",dateTime,sensorDictionary)
