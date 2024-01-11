@@ -66,7 +66,7 @@ deiuList = [
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    topic = "utd/lora/app/2/device/+/event/up"
+    topic = "utd/lora/app/5/device/+/event/up"
     client.subscribe(topic)
     print("Subscrbing to Topic: "+ topic)
 
