@@ -9,3 +9,6 @@ sleep 1
 python3 LNDataReader.py &
 
 
+kill $(pgrep -f 'python3 IQDataReader.py')
+sleep 1
+python3 IQDataReader.py &

@@ -45,6 +45,276 @@ latestOn                = mD.latestOn
 mqttOn                  = mD.mqttOn
 decoder                 = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
+iqDeviceIDs             = mD.IQDeviceIDs
+iqSensorIDs             = mD.IQSensorIDs
+
+
+
+# IQ SENSOR UPDATES 
+
+def sensorSendLoRaIQ(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+    if(sensorID=="D739SENSERTD1"):
+        D739SENSERTD1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSERTD2"):
+        D739SENSERTD2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSERTD3"):
+        D739SENSERTD3LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSEPS1"):
+        D739SENSEPS1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSEPS2"):
+        D739SENSEPS2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSEPC1"):
+        D739SENSEPC1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+    if(sensorID=="D739SENSETM1"):
+        D739SENSETM1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits) 
+
+def D739SENSERTD1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSERTD1" and framePort == 56) and len(binaryBits) ==80:
+        temperature  = int(binaryBits[17:27], 2)/10 - 30
+        humidity     = int(binaryBits[27:35], 2)/2
+        co2          = int(binaryBits[35:49], 2)
+        voc          = int(binaryBits[49:63], 2)
+        formaldehyde = int(binaryBits[63:73], 2)
+        
+        sensorDictionary =  OrderedDict([
+                ("dateTime"          ,str(dateTime)),
+                ("temperature"      ,temperature),
+                ("humidity"         ,humidity),
+                ("co2"              ,co2),
+                ("voc"              ,voc),
+                ("formaldehyde"     ,formaldehyde), 
+        ])
+        print(sensorDictionary)
+  
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+
+def D739SENSERTD2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSERTD2" and framePort == 56) and len(binaryBits) ==80:
+        luminosity     = int(binaryBits[21:29], 2)*5
+        meanNoise      = int(binaryBits[29:36], 2)
+        peakNoise      = int(binaryBits[36:43], 2)
+        occupancyRatio = int(binaryBits[43:51], 2)
+        pressure       = int(binaryBits[51:61], 2) + 300
+        
+        sensorDictionary =  OrderedDict([
+                ("dateTime"          ,str(dateTime)),
+                ("luminosity"        ,luminosity),
+                ("meanNoise"         ,meanNoise),
+                ("peakNoise"         ,peakNoise),
+                ("occupancyRatio"    ,occupancyRatio),
+                ("pressure"          ,pressure), 
+        ])
+        print(sensorDictionary)
+  
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+def D739SENSERTD3LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSERTD3" and framePort == 56) and len(binaryBits) ==80:
+        pm1_0          = int(binaryBits[16:27], 2)
+        pm2_5          = int(binaryBits[27:38], 2)
+        pm10_0         = int(binaryBits[38:49], 2)
+
+        sensorDictionary =  OrderedDict([
+                ("dateTime"       ,str(dateTime)),
+                ("pm1_0"          ,pm1_0),
+                ("pm2_5"          ,pm2_5),
+                ("pm10_0"         ,pm10_0),
+        ])
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+
+    return ;  
+
+def D739SENSETM1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSETM1" and framePort == 56) and len(binaryBits) ==16:
+        testMessage          =   1
+
+        sensorDictionary =  OrderedDict([
+                ("dateTime"       ,str(dateTime)),
+                ("testMessage"          ,testMessage),
+        ])
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+
+    return ;  
+
+
+def D739SENSEPS1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSEPS1" and framePort == 56) and len(binaryBits) ==56:
+        hardwareVersion             = int(binaryBits[16:24], 2)
+        softwareVersion             = int(binaryBits[24:32], 2)
+        hardwareStatus              = int(binaryBits[33:34], 2)
+        pmStatus                    = int(binaryBits[34:36], 2)
+        temperatureHumididtyStatus  = int(binaryBits[36:38], 2)
+        formaldehydeStatus          = int(binaryBits[38:40], 2)
+        co2Status                   = int(binaryBits[40:42], 2)
+        vocStatus                   = int(binaryBits[42:44], 2)
+        occupancyStatus             = int(binaryBits[44:46], 2)
+        microphoneStatus            = int(binaryBits[46:48], 2)
+        pressureStatus              = int(binaryBits[48:50], 2)
+        accelerometerStatus         = int(binaryBits[50:52], 2)
+        brightnessStatus            = int(binaryBits[52:54], 2)
+        
+        sensorDictionary =  OrderedDict([
+                ("dateTime"                     ,str(dateTime)),
+                ("hardwareVersion"             ,hardwareVersion),
+                ("softwareVersion"             ,softwareVersion),
+                ("hardwareStatus"              ,hardwareStatus),
+                ("pmStatus"                    ,pmStatus),
+                ("temperatureHumididtyStatus"  ,temperatureHumididtyStatus),
+                ("formaldehydeStatus"          ,formaldehydeStatus),
+                ("co2Status"                   ,co2Status),
+                ("vocStatus"                   ,vocStatus),
+                ("occupancyStatus"             ,occupancyStatus),
+                ("microphoneStatus"            ,microphoneStatus),
+                ("pressureStatus"              ,pressureStatus),
+                ("accelerometerStatus"         ,accelerometerStatus),
+                ("brightnessStatus"            ,brightnessStatus)
+        ])
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+    return ;  
+
+def D739SENSEPS2LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSEPS2" and framePort == 56) and len(binaryBits) ==76:
+        pendingMembership           = int(binaryBits[17:18], 2)
+        activationTimeCounter       = int(binaryBits[18:26], 2)
+        year                        = int(binaryBits[26:32], 2) + 2000
+        month                       = int(binaryBits[32:36], 2)
+        day                         = int(binaryBits[36:41], 2)
+        hour                        = int(binaryBits[41:46], 2)
+        minute                      = int(binaryBits[46:52], 2)
+        
+        sensorDictionary =  OrderedDict([
+                ("dateTime"                    ,str(dateTime)),
+                ("pendingMembership"           ,pendingMembership),
+                ("activationTimeCounter"       ,activationTimeCounter),
+                ("year"                        ,year),
+                ("month"                       ,month),
+                ("day"                         ,day),
+                ("hour"                        ,hour),
+                ("minute"                      ,minute)
+        ])
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+
+def D739SENSEPC1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBits):
+
+    if (sensorID == "D739SENSEPC1" and framePort == 56) and len(binaryBits) ==64:
+        reconfigurationSource       = int(binaryBits[16:18], 2)
+        reconfigurationStatus       = int(binaryBits[18:20], 2)
+        LEDActivation               = int(binaryBits[20:21], 2)
+        LEDFunction                 = int(binaryBits[21:23], 2)
+        indicationForAverageIAQ     = int(binaryBits[23:24], 2)
+        notificationButton          = int(binaryBits[24:25], 2)
+        keepAliveFunctionActication = int(binaryBits[25:26], 2)
+        nfcStatus                   = int(binaryBits[26:28], 2)
+        LoRaRegion                  = int(binaryBits[28:31], 2)            
+        measurmentPeriod            = int(binaryBits[32:40], 2)     
+        waitingPeriod               = int(binaryBits[40:48], 2)*20     
+        highThresholdOfCO2          = int(binaryBits[48:56], 2)*20    
+        lowThresholdOfCO2           = int(binaryBits[56:64], 2)*20                
+
+        sensorDictionary =  OrderedDict([
+                ("dateTime"                    ,str(dateTime)),
+                ("reconfigurationSource"        ,reconfigurationSource),
+                ("reconfigurationStatus"        ,reconfigurationStatus),
+                ("LEDActivation"                ,LEDActivation),
+                ("LEDFunction"                  ,LEDFunction),
+                ("indicationForAverageIAQ"      ,indicationForAverageIAQ),
+                ("notificationButton"           ,notificationButton),
+                ("keepAliveFunctionActication"  ,keepAliveFunctionActication),
+                ("nfcStatus"                    ,nfcStatus ),
+                ("LoRaRegion"                   ,LoRaRegion),
+                ("measurmentPeriod"             ,measurmentPeriod),
+                ("waitingPeriod"                ,waitingPeriod),
+                ("highThresholdOfCO2"           ,highThresholdOfCO2),        
+                ("lowThresholdOfCO2"            ,lowThresholdOfCO2),                    
+        ])
+        print(sensorDictionary)
+        loRaWriteFinisher(nodeID,sensorID,dateTime,sensorDictionary)
+
+def base64_to_bits(base64_string):
+    # Decode the Base64 string
+    decoded_bytes = base64.b64decode(base64_string)
+
+    # Convert each byte to its binary representation and concatenate them
+    bits = ''.join(format(byte, '08b') for byte in decoded_bytes)
+
+    return bits
+
+def loRaSummaryWriteIQ(message):
+
+    nodeID = message.topic.split('/')[5]
+    sensorPackage       =  decoder.decode(message.payload.decode("utf-8","ignore"))
+    rxInfo              =  sensorPackage['rxInfo'][0]
+    txInfo              =  sensorPackage['txInfo']
+    loRaModulationInfo  =  txInfo['loRaModulationInfo']
+    framePort           =  sensorPackage['fPort']
+
+    dateTime            =  datetime.datetime.fromisoformat(sensorPackage['publishedAt'][0:26])
+    gatewayID           =  base64.b64decode(rxInfo['gatewayID']).hex()
+    rawBase64           =  sensorPackage['data']
+    base16Data          =  base64.b64decode(rawBase64.encode()).hex()
+    binaryBits          =  base64_to_bits(rawBase64)
+
+    # Getting the sensor ID from the Nexalack sensor
+
+    deviceHex           = base16Data[:2] 
+    deviceID            = iqDeviceIDs[deviceHex]
+    sensorHex           = base16Data[2:4] 
+    
+    try:
+        sensorID   = deviceID + iqSensorIDs[sensorHex]
+    except Exception as e:
+        print("[ERROR] Sensor Unknown: {}".format(e))
+        sensorID = deviceID + "UNK"
+
+    print(sensorID)
+    
+
+
+    sensorDictionary =  OrderedDict([
+            ("dateTime"        , str(dateTime)),
+            ("nodeID"          , nodeID),
+            ("sensorID"        , sensorID),
+            ("gatewayID"       , gatewayID),
+            ("rssi"            , rxInfo["rssi"]),
+            ("loRaSNR"         , rxInfo["loRaSNR"]),
+            ("channel"         , rxInfo["channel"] ),
+            ("rfChain"         , rxInfo["rfChain"] ),
+            ("frequency"       , txInfo["frequency"]),
+            ("bandwidth"       , loRaModulationInfo["bandwidth"]),
+            ("spreadingFactor" , loRaModulationInfo["spreadingFactor"] ),
+            ("codeRate"        , loRaModulationInfo["codeRate"] ),
+            ("dataRate"        , sensorPackage['dr']),
+            ("frameCounters"   , sensorPackage['fCnt']),
+            ("framePort"       , framePort),
+            ("base64Data"      , sensorPackage['data']),
+            ("base16Data"      , base16Data),
+            ("devAddr"         , sensorPackage['devAddr']),
+            ("deviceAddDecoded", base64.b64decode(sensorPackage['devAddr'].encode()).hex())
+        ])
+    print(sensorDictionary)
+    
+    loRaWriteFinisher("LoRaNodes","Summary",dateTime,sensorDictionary)
+    loRaWriteFinisher(gatewayID,"Summary",dateTime,sensorDictionary)
+
+    return dateTime,gatewayID,nodeID,sensorID,\
+        framePort,base16Data,binaryBits;
+
+
+# FOR OUTDOOR NODES
+
 def sensorSendLoRa(dateTime,nodeID,sensorID,framePort,base16Data):
     if(sensorID=="PM"):
         PMLoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data) 
