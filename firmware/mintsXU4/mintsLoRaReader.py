@@ -153,7 +153,7 @@ def D739SENSEPS1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBi
         softwareVersion             = int(binaryBits[24:32], 2)
         hardwareStatus              = int(binaryBits[33:34], 2)
         pmStatus                    = int(binaryBits[34:36], 2)
-        temperatureHumididtyStatus  = int(binaryBits[36:38], 2)
+        temperatureHumidityStatus   = int(binaryBits[36:38], 2)
         formaldehydeStatus          = int(binaryBits[38:40], 2)
         co2Status                   = int(binaryBits[40:42], 2)
         vocStatus                   = int(binaryBits[42:44], 2)
@@ -169,7 +169,7 @@ def D739SENSEPS1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBi
                 ("softwareVersion"             ,softwareVersion),
                 ("hardwareStatus"              ,hardwareStatus),
                 ("pmStatus"                    ,pmStatus),
-                ("temperatureHumididtyStatus"  ,temperatureHumididtyStatus),
+                ("temperatureHumidityStatus"   ,temperatureHumidityStatus),
                 ("formaldehydeStatus"          ,formaldehydeStatus),
                 ("co2Status"                   ,co2Status),
                 ("vocStatus"                   ,vocStatus),
@@ -216,7 +216,7 @@ def D739SENSEPC1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBi
         LEDFunction                 = int(binaryBits[21:23], 2)
         indicationForAverageIAQ     = int(binaryBits[23:24], 2)
         notificationButton          = int(binaryBits[24:25], 2)
-        keepAliveFunctionActication = int(binaryBits[25:26], 2)
+        keepAliveFunctionActivation = int(binaryBits[25:26], 2)
         nfcStatus                   = int(binaryBits[26:28], 2)
         LoRaRegion                  = int(binaryBits[28:31], 2)            
         measurmentPeriod            = int(binaryBits[32:40], 2)     
@@ -232,7 +232,7 @@ def D739SENSEPC1LoRaWrite(dateTime,nodeID,sensorID,framePort,base16Data,binaryBi
                 ("LEDFunction"                  ,LEDFunction),
                 ("indicationForAverageIAQ"      ,indicationForAverageIAQ),
                 ("notificationButton"           ,notificationButton),
-                ("keepAliveFunctionActication"  ,keepAliveFunctionActication),
+                ("keepAliveFunctionActivation"  ,keepAliveFunctionActivation),
                 ("nfcStatus"                    ,nfcStatus ),
                 ("LoRaRegion"                   ,LoRaRegion),
                 ("measurmentPeriod"             ,measurmentPeriod),
